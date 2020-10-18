@@ -1,0 +1,5 @@
+#set($playerQuiz = {})
+$util.qr($playerQuiz.put("quizId", $ctx.args.quizId))
+$util.qr($playerQuiz.put("playerName", $ctx.args.playerName))
+
+$utils.toJson($playerQuiz)

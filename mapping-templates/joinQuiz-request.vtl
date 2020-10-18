@@ -1,0 +1,17 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "UpdateItem",
+    "key" : {
+        "PK" : { "S" : "QUIZ#$ctx.args.quizId" },
+        "SK" : { "S" : "QUIZ#$ctx.args.quizId" }
+    },
+    "update" : {
+        "expression" : "ADD playerNames :playerName",
+        "expressionValues": {
+            ":playerName" : { "SS" : ["$ctx.args.playerName"] }
+        }
+    },
+    "condition": {
+        "expression": "attribute_exists(PK)"
+    }
+}

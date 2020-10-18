@@ -1,0 +1,31 @@
+Resources:
+  AppSyncDynamoDBServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "Dynamo-${self:service}-${self:custom.stage}-AppSyncService-Role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "appsync.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        -
+          PolicyName: "Dynamo-${self:service}-${self:custom.stage}-AppSync-Policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:GetItem"
+                  - "dynamodb:DeleteItem"
+                  - "dynamodb:PutItem"
+                  - "dynamodb:UpdateItem"
+                Resource:
+                  - "Fn::GetAtt": [ MainTable, Arn]

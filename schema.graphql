@@ -1,0 +1,77 @@
+type Mutation {
+    # createQuestion(
+        # quizId: String!
+        # questionMasterId: String!
+        # body: String!
+    # ): Question!
+
+    # TODO add orderQuestions (i.e. ability to reorder);
+
+    joinQuiz(
+        quizId: String!
+        playerName: String!
+    ): PlayerQuiz!
+
+#    addAnswer(
+#        quizId: String!
+#        content: String!
+#        addedBy: String!
+#    ): Answer!
+
+ #   startQuiz(
+  #      quizId: String!
+   #     questionMasterId: String!
+    #    playerNames: [String!]!
+   # ): Quiz!
+
+    createQuiz(quizMasterName: String!): Quiz!
+}
+
+type Query {
+    getQuiz(quizId: String!): Quiz!
+}
+
+type Subscription {
+    #subscribeToStartQuiz(quizId: String!): Quiz
+        #@aws_subscribe(mutations: ["startQuiz"])
+    #subscribeToNewAnswers(quizId: String!): Answer
+        #@aws_subscribe(mutations: ["addAnswer"])
+    subscribeToPlayersJoining(quizId: String!): PlayerQuiz
+        @aws_subscribe(mutations: ["joinQuiz"])
+}
+
+#type Answer {
+#    quizId: String!
+#    content: String!
+#    addedBy: String!
+#}
+
+#type Question {
+#    quizId: String!
+#    questionId: String!
+#}
+
+type PlayerQuiz {
+	playerName: String!
+	quizId: String!
+}
+
+type Quiz {
+    quizId: String!
+    quizMasterId: String!
+    quizMasterName: String!
+    questionOrder: [String]
+    playerNames: [String]
+    currentScore: [PlayerPoints]
+}
+
+type PlayerPoints {
+    playerName: String!
+    points: Int!
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
