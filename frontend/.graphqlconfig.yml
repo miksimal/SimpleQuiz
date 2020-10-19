@@ -1,0 +1,15 @@
+projects:
+  simplequiz-dev-api:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+        region: eu-west-1
+        apiId: 6nd3e7tqwvgb7gtmbszqzalanq
+        maxDepth: 2

@@ -8,12 +8,12 @@ provider:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  output:
+    file: ../frontend/src/stack.json
   appSync:
     name: ${self:service}-${self:custom.stage}-api
     authenticationType: AWS_IAM
     schema: schema.graphql
-    additionalAuthenticationProviders:
-      - authenticationType: API_KEY
     mappingTemplates:
       - dataSource: MainTableDataSource
         type: Mutation
@@ -35,14 +35,16 @@ custom:
 
 package:
   individually: true
-  # exclude:
-  #   - ./front/**
-  #   - front/**
 
 plugins:
   - serverless-bundle
   - serverless-appsync-plugin
+  - serverless-stack-output
 
 resources:
   - ${file(resources/dynamodb-table.yml)}
   - ${file(resources/roles.yml)}
+  - ${file(resources/cognito-identity.yml)}
+  - Outputs:
+      Region:
+        Value: ${self:provider.region}

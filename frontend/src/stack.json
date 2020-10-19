@@ -1,0 +1,7 @@
+{
+  "GraphQlApiUrl": "https://gqupr6tkwzbe3ae3eykifzmfoy.appsync-api.eu-west-1.amazonaws.com/graphql",
+  "Region": "eu-west-1",
+  "IdentityPoolId": "eu-west-1:6c5e2057-a786-47a0-8e0b-d5ab3cbf9156",
+  "GraphQlApiId": "6nd3e7tqwvgb7gtmbszqzalanq",
+  "ServerlessDeploymentBucketName": "simplequiz-dev-serverlessdeploymentbucket-lzb6arcehf3h"
+}

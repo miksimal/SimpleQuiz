@@ -1,0 +1,17 @@
+{
+  "projectName": "SimpleQuiz",
+  "version": "3.0",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": "src",
+      "DistributionDir": "build",
+      "BuildCommand": "npm run react-scripts build",
+      "StartCommand": "npm run react-scripts start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}

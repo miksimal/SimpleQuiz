@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-simplequiz-dev-83656-authRole",
+      "UnauthRoleArn": "arn:aws:iam::866195672519:role/amplify-simplequiz-dev-83656-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::866195672519:role/amplify-simplequiz-dev-83656-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-simplequiz-dev-83656-deployment",
+      "UnauthRoleName": "amplify-simplequiz-dev-83656-unauthRole",
+      "StackName": "amplify-simplequiz-dev-83656",
+      "StackId": "arn:aws:cloudformation:eu-west-1:866195672519:stack/amplify-simplequiz-dev-83656/f4f42e20-11dd-11eb-87c6-0265d6cdeea8",
+      "AmplifyAppId": "dn4097q4syv90"
+    }
+  }
+}
