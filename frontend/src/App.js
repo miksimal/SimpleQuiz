@@ -20,23 +20,29 @@ Amplify.configure({
 });
 
 function App() {
+  const [hasQuiz, setHasQuiz] = useState(false);
   const [quizId, setQuizId] = useState('');
-  const [players, setPlayers] = useState(['abc']);
+  const [quizMasterId, setQuizMasterId] = useState('');
+  const [playerName, setPlayerName] = useState('');
+  const [quizMasterName, setQuizMasterName] = useState('');
+  const [players, setPlayers] = useState([]);
 
   async function createQuiz() {
-    const result = await API.graphql(graphqlOperation(mutations.createQuiz, {quizMasterName: 'Mik'}));
-    console.log(result.data);
+    const result = await API.graphql(graphqlOperation(mutations.createQuiz, {quizMasterName: quizMasterName}));
+    setQuizId(result.data.createQuiz.quizId);
+    setQuizMasterId(result.data.createQuiz.quizMasterId);
+    subscribe(result.data.createQuiz.quizId);
+    setHasQuiz(true);
   }
   
   async function joinQuiz() {
-    await API.graphql(graphqlOperation(mutations.joinQuiz, {quizId: quizId, playerName: 'Player one'}));
-  }
-  async function joinQuiz2() {
-    await API.graphql(graphqlOperation(mutations.joinQuiz, {quizId: quizId, playerName: 'Player two'}));
+    await API.graphql(graphqlOperation(mutations.joinQuiz, {quizId: quizId, playerName: playerName}));
+    subscribe(quizId);
   }
 
-  function subscribe() {
-    API.graphql(graphqlOperation(subscriptions.subscribeToPlayersJoining, {quizId: quizId}))
+  function subscribe(id) {
+    console.log('Subscribing to quiz: ' + id);
+    API.graphql(graphqlOperation(subscriptions.subscribeToPlayersJoining, {quizId: id}))
       .subscribe({
         next: (result) => {
           setPlayers(players => [...players, result.value.data.subscribeToPlayersJoining.playerName]);
@@ -50,16 +56,36 @@ function App() {
         <p>
           SimpleQuiz
         </p>
-        <button onClick={createQuiz}>createQuiz</button>
-        <button onClick={joinQuiz}>joinQuiz1</button>
-        <button onClick={joinQuiz2}>joinQuiz2</button>
-        <input onChange={event => setQuizId(event.target.value)}></input>
-        <button onClick={subscribe}>subscribe</button>
-        <p>The following players have joined:</p>
-        <ul>
-          {players.map(e => <li>{e}</li>)}
-        </ul>
       </header>
+      <main className="App-main">
+        {!hasQuiz ? 
+        <>
+          <div className="CreateQuiz">
+            <h3>Create Quiz</h3>
+            <label for="setQuizMasterName">Your name: </label>
+            <input id="setQuizMasterName" onChange={event => setQuizMasterName(event.target.value)}></input>
+            <button onClick={createQuiz}>Create</button>
+          </div>
+          <div className="JoinQuiz">
+            <h3>Join Quiz</h3>
+            <label for="setPlayerName">Your name: </label>
+            <input id="setPlayerName" onChange={event => setPlayerName(event.target.value)}></input>
+            <label for="setQuizId">Quiz code: </label>
+            <input id="setQuizId" onChange={event => setQuizId(event.target.value)}></input>
+            <button onClick={joinQuiz}>Join</button>
+          </div>
+        </>
+        :
+        <>
+          <p>Waiting for players to join. Your quiz link is: https://simplequiz.miksimal.com/{quizId}</p>
+
+          <p>The following players have joined:</p>
+          <ul>
+            {players.map(e => <li>{e}</li>)}
+          </ul>
+        </>
+        }
+      </main>
 
     </div>
   );
